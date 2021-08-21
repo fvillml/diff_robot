@@ -1,0 +1,43 @@
+<?xml version='1.0'?>
+
+<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:macro name="box_chassis" params="length width height mass">
+
+  <link name='chassis'>
+
+    <inertial>
+      <mass value="${mass}"/>
+      <origin xyz="0.0 0 0" rpy=" 0 0 0"/>
+      <inertia
+          ixx="${(mass/12)*(width*width+height*height)}" ixy="0" ixz="0"
+          iyy="${(mass/12)*(length*length+height*height)}" iyz="0"
+          izz="${(mass/12)*(width*width+length*length)}"
+      />
+    </inertial>
+
+    <collision>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/> 
+      <geometry>
+        <box size="${length} ${width} ${height}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+      <geometry>
+        <box size="${length} ${width} ${height}"/>
+      </geometry>
+    </visual>
+
+  </link>
+
+  <joint name="robot_footprint_joint" type="fixed">
+    <origin xyz="0 0 ${height/2} " rpy="0 0 0" />
+    <parent link="robot_footprint"/>
+    <child link="chassis" />
+  </joint>
+
+</xacro:macro>
+
+</robot>
