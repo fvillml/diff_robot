@@ -2,25 +2,56 @@
 
 #include <thread>
 #include <termios.h>
+#include <atomic>
 
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 
+/**
+ * @brief Class used to interprete keys from the keyboard. It converts the received key into a command for the
+ * robot.
+ */
 class KeyInterpreter {
 public:
+    /**
+     * @brief Construct a new KeyInterpreter.
+     */
     KeyInterpreter();
+
+    /**
+     * @brief Destroy the Key Interpreter.
+     */
     ~KeyInterpreter();
 
+    /**
+     * @brief Set the termios parameters back to the origin and stops the current key reading thread. Used to
+     * be able to kill the thread with ctrl-c.
+     */
     void quit();
+
+    /**
+     * @brief Main loop. Listen to the keyboard input and get the pressed key continuously, then interpretes
+     * the key to transform it into a command to the robot.
+     */
     void interpreteKeys();
 
 private:
-    int file_descriptor_ { 0 };
-    struct termios old_termios_, new_termios_;
-    float linear_speed_ { 0.1 }, angular_speed_ { 0.1 };
-    std::atomic_int ang_mult_ { 0 }, lin_mult_ { 0 };
+    /** Node handler for this class */
     ros::NodeHandle node_handler_;
+    /** Velocity publisher */
     ros::Publisher cmd_vel_publisher_;
+    /** File descriptor used to access to the keyboard calls */
+    int file_descriptor_ { 0 };
+    /** termios structure containing the old configuration of the file descriptor */
+    struct termios old_termios_;
+    /** termios structure containing the new configuration of the file descriptor. The new configuration
+     * allows to get information from the keyboard. */
+    struct termios new_termios_;
+    /** Current linear speed*/
+    float linear_speed_ { 0.1 };
+    /** Current angular speed */
+    float angular_speed_ { 0.1 };
+    /** Message with the used commands */
     const char* msg_ = R"(
         ---------------------------
         Moving around:
@@ -34,6 +65,13 @@ private:
         CTRL-C to quit 
         ---------------------------)";
 
+    /**
+     * @brief Loop used by interpreteKeys function to get and interprete a character from the keyboard.
+     */
     void keyLoop();
+
+    /**
+     * @brief publishes the angular and linear speed of the robot.
+     */
     void publish();
 };

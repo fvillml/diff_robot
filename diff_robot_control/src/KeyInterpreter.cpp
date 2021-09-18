@@ -34,9 +34,8 @@ void KeyInterpreter::quit() {
 }
 
 void KeyInterpreter::interpreteKeys() {
-    /** gets the parameters associated with the object referred by file_descriptor_
-     * and stores them in the termios structure old_termios_.
-     */
+    // gets the parameters associated with the object referred by file_descriptor_
+    // and stores them in the termios structure old_termios_.
     tcgetattr(file_descriptor_, &old_termios_);
 
     // copy the data from data_ready_ to raw_data_
@@ -76,19 +75,19 @@ void KeyInterpreter::keyLoop() {
         switch (c) {
             case KEY_UP:
                 ROS_INFO("UP -> ls: %f, as: %f", linear_speed_, angular_speed_);
-                lin_mult_ = 1;
+                linear_speed_ = std::fabs(linear_speed_);
                 break;
             case KEY_DOWN:
                 ROS_INFO("DOWN -> ls: %f, as: %f", linear_speed_, angular_speed_);
-                lin_mult_ = -1;
+                linear_speed_ = -1.0 * linear_speed_;
                 break;
             case KEY_RIGHT:
                 ROS_INFO("RIGHT -> ls: %f, as: %f", linear_speed_, angular_speed_);
-                ang_mult_ = 1;
+                angular_speed_ = std::fabs(angular_speed_);
                 break;
             case KEY_LEFT:
                 ROS_INFO("LEFT -> ls: %f, as: %f", linear_speed_, angular_speed_);
-                ang_mult_ = -1;
+                angular_speed_ = -1.0 * angular_speed_;
                 break;
             case KEY_W:
                 linear_speed_ += 0.5;
@@ -115,7 +114,7 @@ void KeyInterpreter::keyLoop() {
                 break;
             default:
                 ROS_INFO("value: 0x%02X not suported. Stopping.", c);
-                ang_mult_ = lin_mult_ = 0;
+                angular_speed_ = linear_speed_ = 0;
                 break;
         }
 
@@ -125,8 +124,7 @@ void KeyInterpreter::keyLoop() {
 
 void KeyInterpreter::publish() {
     geometry_msgs::Twist vel_msg_;
-    vel_msg_.linear.x = lin_mult_ * linear_speed_;
-    vel_msg_.angular.z = ang_mult_ * angular_speed_;
-
+    vel_msg_.linear.x = linear_speed_;
+    vel_msg_.angular.z = angular_speed_;
     cmd_vel_publisher_.publish(vel_msg_);
 }
