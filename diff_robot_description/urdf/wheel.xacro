@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 
-<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="diff_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 <xacro:macro name="wheel" params="side mass x:=0 y:=0 z:=0 radius length">
 

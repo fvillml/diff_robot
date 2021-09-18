@@ -1,1 +1,3 @@
-# my_robot
+# Diff Robot
+
+ROS packages for a differential robot.

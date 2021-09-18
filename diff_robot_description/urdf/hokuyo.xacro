@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 
-<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="diff_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 <xacro:macro name="hokuyo" params="x:=0 y:=0 z:=0">
 
@@ -15,7 +15,7 @@
         <visual name="">
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://my_robot_description/meshes/hokuyo.dae"/>
+                <mesh filename="package://diff_robot_description/meshes/hokuyo.dae"/>
             </geometry>
             <material name="">
                 <color rgba="0 0.0 0.0 1.0"/>

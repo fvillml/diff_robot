@@ -1,6 +1,6 @@
 <launch>
   <!-- World File -->
-  <arg name="world_file" default="$(find my_robot_gazebo)/worlds/office.world"/>
+  <arg name="world_file" default="$(find diff_robot_gazebo)/worlds/office.world"/>
   <!-- Launch Gazebo World -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(arg world_file)"/>
@@ -12,9 +12,9 @@
   </include>
 
   <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
-  <param name="robot_description" command="$(find xacro)/xacro '$(find my_robot_description)/urdf/my_robot.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro '$(find diff_robot_description)/urdf/diff_robot.xacro'" />
 
   <!-- Spawn a robot into Gazebo -->
-  <node name="my_robot_spawner" pkg="gazebo_ros" type="spawn_model" output="screen"	args="-param robot_description -urdf -model my_robot" />
+  <node name="diff_robot_spawner" pkg="gazebo_ros" type="spawn_model" output="screen"	args="-param robot_description -urdf -model diff_robot" />
 
 </launch>
