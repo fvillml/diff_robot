@@ -1,0 +1,16 @@
+<launch>
+
+  <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find diff_robot_description)/urdf/diff_robot.xacro'" />
+
+  <!-- Run the joint state publisher. If gui is set to true, publich to joint state from gui -->
+  <arg name="gui" default="true" />
+  <node if="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+  <node unless="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <!-- Launch rviz with custom config -->
+  <arg name="rvizconfig" default="$(find diff_robot_description)/rviz/diff_robot_display.rviz" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+</launch>
