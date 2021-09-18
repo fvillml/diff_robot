@@ -2,42 +2,39 @@
 
 <robot name="diff_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:macro name="my_cam" params="x:=0 y:=0 z:=0">
+<xacro:macro name="cam" params="mass size x:=0 y:=0 z:=0">
 
     <link name="camera">
 
-        <inertial>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0.1"/>
-            <inertia ixx="1e-6" ixy="0.0" ixz="0.0" iyy="1e-6" iyz="0.0" izz="1e-6"/>
-        </inertial>
-
         <visual name="">
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <box size="0.05 0.05 0.05"/>
+                <box size="${size} ${size} ${size}"/>
             </geometry>
-            <material name="">
-                <color rgba="0 0.0 0.0 1.0"/>
-                <texture filename=""/>
-            </material>
+            <!-- Color For Rviz-->
+            <material name="black"/>
         </visual>
 
         <collision>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <box size="0.05 0.05 0.05"/>
+                <box size="${size} ${size} ${size}"/>
             </geometry>
         </collision>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${mass}"/>
+            <xacro:box_inertia m="${mass}" x="${size}" y="${size}" z="${size}"/>
+        </inertial>
 
     </link>
 
     <joint name="camera_joint" type="fixed">
-        <origin xyz="${x} ${y} ${z}" rpy="0.0 0.0 0.0"/>
+        <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
         <parent link="chassis"/>
         <child link="camera"/>
-        <axis xyz="0.0 1 0.0"/>
-        <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
+        <axis xyz="0 1 0"/>
     </joint>
 
 </xacro:macro>

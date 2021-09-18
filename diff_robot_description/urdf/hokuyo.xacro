@@ -6,38 +6,33 @@
 
     <link name="hokuyo">
 
-        <inertial>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="1e-5"/>
-            <inertia ixx="1e-6" ixy="0.0" ixz="0.0" iyy="1e-6" iyz="0.0" izz="1e-6"/>
-        </inertial>
-
         <visual name="">
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
                 <mesh filename="package://diff_robot_description/meshes/hokuyo.dae"/>
             </geometry>
-            <material name="">
-                <color rgba="0 0.0 0.0 1.0"/>
-                <texture filename=""/>
-            </material>
         </visual>
 
         <collision>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <box size="0.1 0.1 0.1"/>
+                <mesh filename="package://diff_robot_description/meshes/hokuyo.dae"/>
             </geometry>
         </collision>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.1"/>
+            <xacro:box_inertia m="0.1" x="0.05" y="0.05" z="0.05"/>
+        </inertial>
 
     </link>
 
     <joint name="hokuyo_joint" type="fixed">
-        <origin xyz="${x} ${y} ${z}" rpy="0.0 0.0 0.0"/>
+        <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
         <parent link="chassis"/>
         <child link="hokuyo"/>
-        <axis xyz="0.0 1 0.0"/>
-        <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
+        <axis xyz="0 1 0"/>
     </joint>
 
 </xacro:macro>

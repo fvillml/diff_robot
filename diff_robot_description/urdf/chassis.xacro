@@ -6,15 +6,14 @@
 
   <link name='chassis'>
 
-    <inertial>
-      <mass value="${mass}"/>
-      <origin xyz="0.0 0 0" rpy=" 0 0 0"/>
-      <inertia
-          ixx="${(mass/12)*(width*width+height*height)}" ixy="0" ixz="0"
-          iyy="${(mass/12)*(length*length+height*height)}" iyz="0"
-          izz="${(mass/12)*(width*width+length*length)}"
-      />
-    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+      <geometry>
+        <box size="${length} ${width} ${height}"/>
+      </geometry>
+      <!-- Color For Rviz-->
+      <material name="green"/>
+    </visual>
 
     <collision>
       <origin xyz="0 0 0" rpy=" 0 0 0"/> 
@@ -23,17 +22,15 @@
       </geometry>
     </collision>
 
-    <visual>
-      <origin xyz="0 0 0" rpy=" 0 0 0"/>
-      <geometry>
-        <box size="${length} ${width} ${height}"/>
-      </geometry>
-    </visual>
+    <inertial>
+      <mass value="${mass}"/>
+      <origin xyz="0.0 0 0" rpy=" 0 0 0"/>
+      <xacro:box_inertia m="${mass}" x="${width}" y="${length}" z="${height}"/>
+    </inertial>
 
   </link>
 
   <joint name="robot_footprint_joint" type="fixed">
-    <origin xyz="0 0 ${height/2} " rpy="0 0 0" />
     <parent link="robot_footprint"/>
     <child link="chassis" />
   </joint>

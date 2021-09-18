@@ -16,6 +16,9 @@
   <xacro:property name="wheel_x" value="${chassis_length/4}"/>
   <xacro:property name="wheel_y" value="${chassis_width/2 + wheel_length/2 + 0.01}"/>
   <xacro:property name="wheel_z" value="0"/>
+  <!-- camera properties -->
+  <xacro:property name="cam_mass" value="0.1"/>
+  <xacro:property name="cam_size" value="0.05"/>
 
   <!-- Import the chassis of the robot -->
   <xacro:include filename="$(find diff_robot_description)/urdf/chassis.xacro" />
@@ -27,8 +30,10 @@
   <xacro:include filename="$(find diff_robot_description)/urdf/camera.xacro" />
   <!-- Import the hokuyo Lidar  -->
   <xacro:include filename="$(find diff_robot_description)/urdf/hokuyo.xacro" />
-    <!-- Import colors for Rviz -->
+  <!-- Import colors for Rviz -->
   <xacro:include filename="$(find diff_robot_description)/urdf/materials.xacro" />
+  <!-- Import inertia macros -->
+  <xacro:include filename="$(find diff_robot_description)/urdf/inertias.xacro" />
   <!-- Import all Gazebo-customization elements (plugins and colors) -->
   <xacro:include filename="$(find diff_robot_description)/urdf/diff_robot.gazebo"/>
 
@@ -48,7 +53,7 @@
   <!-- Back Right wheel -->
   <xacro:wheel side="right"  mass="${wheel_mass}" x="${wheel_x}" y="${wheel_y}" z="${wheel_z}" radius="${wheel_radius}" length="${wheel_length}"/>
   <!-- Camera -->
-  <xacro:my_cam x="${chassis_length/2}"/>
+  <xacro:cam mass="${cam_mass}" size="${cam_size}" x="${chassis_length/2}"/>
   <!-- Lidar -->
   <xacro:hokuyo x="${chassis_length/4}" z="${chassis_height/2 + 0.05}"/>
 

@@ -10,30 +10,28 @@
     </xacro:if>
 
     <link name="${side}_wheel">
-
-        <inertial>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 1.5707 1.5707"/>
-            <mass value="${mass}"/>
-            <inertia 
-                ixx="${(mass/12)*(3*radius*radius+length*length)}" ixy="0.0" ixz="0.0" 
-                iyy="${(mass/12)*(3*radius*radius+length*length)}" iyz="0.0" 
-                izz="${(mass/2)*(radius*radius)}"
-            />
-        </inertial>
         
         <visual name="${side}_wheel_visual">
-            <origin xyz="0.0 0 0" rpy="0.0 1.5707 1.5707"/>
+            <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
             <geometry>
                 <cylinder radius="${radius}" length="${length}"/>
             </geometry>
+            <!-- Color For Rviz-->
+            <material name="black"/>
         </visual>
 
         <collision name="${side}_wheel_collision">
-            <origin xyz="0.0 0 0" rpy="0.0 1.5707 1.5707"/>
+            <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
             <geometry>
                 <cylinder radius="${radius}" length="${length}"/>
             </geometry>
         </collision>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+            <mass value="${mass}"/>
+            <xacro:cylinder_inertia m="${mass}" r="${radius}" h="${length}"/>
+        </inertial>
 
     </link>
 
