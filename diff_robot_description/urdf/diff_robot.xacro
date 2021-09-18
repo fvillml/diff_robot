@@ -2,7 +2,7 @@
 <robot name="diff_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Chassis properties-->
-  <xacro:property name="chassis_length" value="0.4"/>
+  <xacro:property name="chassis_length" value="0.3"/>
   <xacro:property name="chassis_width" value="0.2"/>
   <xacro:property name="chassis_height" value="0.1"/>
   <xacro:property name="chassis_mass" value="15"/>
@@ -14,7 +14,7 @@
   <xacro:property name="wheel_length" value="0.05"/>
   <xacro:property name="wheel_mass" value="5"/>
   <xacro:property name="wheel_x" value="${chassis_length/4}"/>
-  <xacro:property name="wheel_y" value="${chassis_width/2 + wheel_length/2 + 0.01}"/>
+  <xacro:property name="wheel_y" value="${chassis_width/2 + wheel_length/2}"/>
   <xacro:property name="wheel_z" value="0"/>
   <!-- camera properties -->
   <xacro:property name="cam_mass" value="0.1"/>
@@ -34,15 +34,13 @@
   <xacro:include filename="$(find diff_robot_description)/urdf/materials.xacro" />
   <!-- Import inertia macros -->
   <xacro:include filename="$(find diff_robot_description)/urdf/inertias.xacro" />
-  <!-- Import all Gazebo-customization elements (plugins and colors) -->
-  <xacro:include filename="$(find diff_robot_description)/urdf/diff_robot.gazebo"/>
 
   <!-- The base_footprint is the representation of the robot position with respect to the origin 
       of the world. The base_footprint link is a virtual (non-physical) link which has no dimensions 
       or collision areas. Its primary purpose is to enable various packages determine the center 
       of a robot projected to the ground. For example, Navigation2 uses this link to determine the 
       center of a circular footprint used in its obstacle avoidance algorithms-->
-  <link name="robot_footprint"/>
+  <link name="base_link"/>
 
   <!-- Chassis -->
   <xacro:box_chassis length="${chassis_length}" width="${chassis_width}" height="${chassis_height}" mass="${chassis_mass}"/>
@@ -56,5 +54,10 @@
   <xacro:cam mass="${cam_mass}" size="${cam_size}" x="${chassis_length/2}"/>
   <!-- Lidar -->
   <xacro:hokuyo x="${chassis_length/4}" z="${chassis_height/2 + 0.05}"/>
+
+
+  <!-- INCLUDE THIS AT THE END -->
+  <!-- Import all Gazebo-customization elements (plugins and colors) -->
+  <xacro:include filename="$(find diff_robot_description)/urdf/diff_robot.gazebo"/>
 
 </robot>

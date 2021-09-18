@@ -35,16 +35,12 @@
 
     </link>
 
-    <joint name="${side}_wheel_hinge" type="continuous">
+    <joint name="${side}_wheel_joint" type="continuous">
         <origin xyz="${x} ${reflect*y} ${z}" rpy="0.0 0.0 0.0"/>
         <parent link="chassis"/>
         <child link="${side}_wheel"/>
         <axis xyz="0.0 1 0.0"/>
     </joint>
-
-    <gazebo reference="${side}_wheel">
-        <material>Gazebo/Black </material>
-    </gazebo>
 
 </xacro:macro>
 
