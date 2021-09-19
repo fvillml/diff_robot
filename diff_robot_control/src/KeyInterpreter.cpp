@@ -26,6 +26,9 @@ KeyInterpreter::~KeyInterpreter() {
 
 void KeyInterpreter::quit() {
     ROS_INFO("Calling quit");
+    // Stopping the robot
+    angular_factor_ = linear_factor_ = 0;
+    publish();
     // sets the parameters back to old_termios_
     tcsetattr(file_descriptor_, TCSANOW, &old_termios_);
     ROS_INFO("Going to stop reading...");
@@ -72,49 +75,58 @@ void KeyInterpreter::keyLoop() {
             exit(-1);
         }
 
+        // TODO: remove switch case
         switch (c) {
             case KEY_UP:
-                ROS_INFO("UP -> ls: %f, as: %f", linear_speed_, angular_speed_);
-                linear_speed_ = std::fabs(linear_speed_);
+                command_ = "FRONT";
+                linear_factor_ = 1;
+                angular_factor_ = 0;
                 break;
             case KEY_DOWN:
-                ROS_INFO("DOWN -> ls: %f, as: %f", linear_speed_, angular_speed_);
-                linear_speed_ = -1.0 * linear_speed_;
+                // TODO: move smoothly
+                command_ = "BACK";
+                linear_factor_ = -1;
+                angular_factor_ = 0;
                 break;
             case KEY_RIGHT:
-                ROS_INFO("RIGHT -> ls: %f, as: %f", linear_speed_, angular_speed_);
-                angular_speed_ = std::fabs(angular_speed_);
+                command_ = "TURN-RIGHT";
+                linear_factor_ = 0;
+                angular_factor_ = 1;
                 break;
             case KEY_LEFT:
-                ROS_INFO("LEFT -> ls: %f, as: %f", linear_speed_, angular_speed_);
-                angular_speed_ = -1.0 * angular_speed_;
+                command_ = "TURN-LEFT";
+                linear_factor_ = 0;
+                angular_factor_ = -1;
                 break;
             case KEY_W:
-                linear_speed_ += 0.5;
-                ROS_INFO("Increased linear speed to %f", linear_speed_);
+                command_ = "Increased ls";
+                linear_speed_ += 0.1;
                 break;
             case KEY_S:
-                linear_speed_ -= 0.5;
-                if (linear_speed_ < 0)
+                command_ = "Decreased ls";
+                linear_speed_ -= 0.1;
+                if (linear_speed_ < 0) {
                     linear_speed_ = 0.0;
-                ROS_INFO("Decreased linear speed to %f", linear_speed_);
+                }
                 break;
             case KEY_D:
-                angular_speed_ += 0.5;
-                ROS_INFO("Increased angular speed to %f", angular_speed_);
+                command_ = "Increased as";
+                angular_speed_ += 0.1;
                 break;
             case KEY_A:
-                angular_speed_ -= 0.5;
-                if (linear_speed_ < 0)
-                    linear_speed_ = 0.0;
-                ROS_INFO("Increased angular speed to %f", angular_speed_);
+                command_ = "Decreased as";
+                angular_speed_ -= 0.1;
+                if (angular_speed_ < 0) {
+                    angular_speed_ = 0.0;
+                }
                 break;
             case KEY_M:
                 ROS_INFO("%s", msg_);
                 break;
             default:
                 ROS_INFO("value: 0x%02X not suported. Stopping.", c);
-                angular_speed_ = linear_speed_ = 0;
+                command_ = "NS";
+                angular_factor_ = linear_factor_ = 0;
                 break;
         }
 
@@ -124,7 +136,8 @@ void KeyInterpreter::keyLoop() {
 
 void KeyInterpreter::publish() {
     geometry_msgs::Twist vel_msg_;
-    vel_msg_.linear.x = linear_speed_;
-    vel_msg_.angular.z = angular_speed_;
+    vel_msg_.linear.x = linear_factor_ * linear_speed_;
+    vel_msg_.angular.z = angular_factor_ * angular_speed_;
+    ROS_INFO("key: %s - ls: %f - as: %f", command_.c_str(), linear_speed_, angular_speed_);
     cmd_vel_publisher_.publish(vel_msg_);
 }

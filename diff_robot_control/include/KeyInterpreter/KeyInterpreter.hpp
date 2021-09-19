@@ -48,9 +48,15 @@ private:
      * allows to get information from the keyboard. */
     struct termios new_termios_;
     /** Current linear speed*/
-    float linear_speed_ { 0.1 };
+    float linear_speed_ { 0.0f };
     /** Current angular speed */
-    float angular_speed_ { 0.1 };
+    float angular_speed_ { 0.0f };
+    /** Factor to multiply the angular speed. Used to change its direction or to set it to zero. */
+    std::atomic_int angular_factor_ { 0 };
+    /** Factor to multiply the linear speed. Used to change its direction or to set it to zero. */
+    std::atomic_int linear_factor_ { 0 };
+    /** Contains the last command requested */
+    std::string command_ { "" };
     /** Message with the used commands */
     const char* msg_ = R"(
         ---------------------------
