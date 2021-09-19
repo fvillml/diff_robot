@@ -61,12 +61,26 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         caster_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
         chassis:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hokuyo:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -81,10 +95,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        robot_footprint:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -96,15 +106,21 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        base_link:
+          Value: true
+        camera:
+          Value: true
         caster_wheel:
           Value: true
         chassis:
           Value: true
+        hokuyo:
+          Value: true
         left_wheel:
           Value: true
-        right_wheel:
+        odom:
           Value: true
-        robot_footprint:
+        right_wheel:
           Value: true
       Marker Alpha: 1
       Marker Scale: 1
@@ -113,10 +129,15 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        robot_footprint:
-          chassis:
-            caster_wheel:
-              {}
+        odom:
+          base_link:
+            chassis:
+              camera:
+                {}
+              caster_wheel:
+                {}
+              hokuyo:
+                {}
             left_wheel:
               {}
             right_wheel:
@@ -127,7 +148,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: robot_footprint
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:

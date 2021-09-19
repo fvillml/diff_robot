@@ -19,6 +19,8 @@
   </gazebo>
 
   <gazebo reference="caster_wheel">
+    <mu1 value="0.0"/>
+    <mu2 value="0.0"/>
     <material>Gazebo/Black </material>
   </gazebo>
 
