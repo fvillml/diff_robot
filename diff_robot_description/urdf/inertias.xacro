@@ -8,10 +8,10 @@
     />
   </xacro:macro>
 
-  <xacro:macro name="box_inertia" params="m x y z">
-    <inertia  ixx="${m*(y*y+z*z)/12}" ixy = "0" ixz = "0"
-      iyy="${m*(x*x+z*z)/12}" iyz = "0"
-      izz="${m*(x*x+z*z)/12}"
+  <xacro:macro name="box_inertia" params="m x y z xd:=0 yd:=0 zd:=0">
+    <inertia  ixx="${m*(y*y+z*z)/12 + m*xd*xd}" ixy = "0" ixz = "0"
+      iyy="${m*(x*x+z*z)/12 + m*yd*yd}" iyz = "0"
+      izz="${m*(x*x+z*z)/12 + m*zd*zd}"
     />
   </xacro:macro>
 

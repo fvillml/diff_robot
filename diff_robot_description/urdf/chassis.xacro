@@ -24,13 +24,14 @@
 
     <inertial>
       <mass value="${mass}"/>
-      <origin xyz="0.0 0 0" rpy=" 0 0 0"/>
-      <xacro:box_inertia m="${mass}" x="${width}" y="${length}" z="${height}"/>
+      <origin xyz="${length/4} 0 0" rpy=" 0 0 0"/>
+      <xacro:box_inertia m="${mass}" x="${length}" y="${width}" z="${height}" xd="${length/4}"/>
     </inertial>
 
   </link>
 
-  <joint name="robot_footprint_joint" type="fixed">
+  <joint name="chassis_joint" type="fixed">
+    <origin xyz="${-length/4} 0 0" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="chassis" />
   </joint>
