@@ -45,7 +45,7 @@
   <link name="base_link"/>
 
   <!-- Chassis -->
-  <xacro:box_chassis length="${chassis_length}" width="${chassis_width}" height="${chassis_height}" mass="${chassis_mass}"/>
+  <xacro:box_chassis length="${chassis_length}" width="${chassis_width}" height="${chassis_height}" mass="${chassis_mass}" z_rot_axis="${[wheel_x, 0]}"/>
 
   <!-- Caster wheel -->
   <xacro:caster_wheel radius="${caster_radius}" mass="${caster_mass}" x="${caster_x}" z="${caster_z}"/>
@@ -56,7 +56,7 @@
   <!-- Camera -->
   <xacro:cam mass="${cam_mass}" size="${cam_size}" x="${chassis_length/2}"/>
   <!-- Lidar -->
-  <xacro:hokuyo x="${chassis_length/4}" z="${chassis_height/2 + 0.04}"/>
+  <xacro:hokuyo x="${wheel_x}" z="${chassis_height/2 + 0.05}"/>
 
 
   <!-- INCLUDE THIS AT THE END -->

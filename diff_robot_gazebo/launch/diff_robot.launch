@@ -1,6 +1,7 @@
 <launch>
+  <param name ="/use_sim_time" value="true"/>
   <!-- World File -->
-  <arg name="world_file" default="$(find diff_robot_gazebo)/worlds/office.world"/>
+  <arg name="world_file" default="$(find diff_robot_gazebo)/worlds/room.world"/>
   <!-- Launch Gazebo World -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(arg world_file)"/>
@@ -16,5 +17,9 @@
 
   <!-- Spawn a robot into Gazebo -->
   <node name="diff_robot_spawner" pkg="gazebo_ros" type="spawn_model" output="screen"	args="-param robot_description -urdf -model diff_robot" />
+ 
+  <!-- Send robot states to tf -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+  </node>
 
 </launch>

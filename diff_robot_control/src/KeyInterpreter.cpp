@@ -28,6 +28,7 @@ void KeyInterpreter::quit() {
     ROS_INFO("Calling quit");
     // Stopping the robot
     angular_factor_ = linear_factor_ = 0;
+    command_ = "QUIT";
     publish();
     // sets the parameters back to old_termios_
     tcsetattr(file_descriptor_, TCSANOW, &old_termios_);
@@ -91,12 +92,12 @@ void KeyInterpreter::keyLoop() {
             case KEY_RIGHT:
                 command_ = "TURN-RIGHT";
                 linear_factor_ = 0;
-                angular_factor_ = 1;
+                angular_factor_ = -1;
                 break;
             case KEY_LEFT:
                 command_ = "TURN-LEFT";
                 linear_factor_ = 0;
-                angular_factor_ = -1;
+                angular_factor_ = 1;
                 break;
             case KEY_W:
                 command_ = "Increased ls";

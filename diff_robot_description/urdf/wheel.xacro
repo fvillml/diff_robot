@@ -4,9 +4,10 @@
 
 <xacro:macro name="wheel" params="side mass x:=0 y:=0 z:=0 radius length">
 
-    <xacro:property name="reflect" value="1"/>
+    <!-- Right wheel is on the negative y axis -->
+    <xacro:property name="reflect" value="-1"/>
     <xacro:if value="${side.endswith('left')}">
-        <xacro:property name="reflect" value="-1"/>
+        <xacro:property name="reflect" value="1"/>
     </xacro:if>
 
     <link name="${side}_wheel">

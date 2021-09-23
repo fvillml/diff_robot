@@ -2,7 +2,7 @@
 
 <robot name="diff_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:macro name="box_chassis" params="length width height mass">
+<xacro:macro name="box_chassis" params="length width height mass z_rot_axis:=${[0,0]}">
 
   <link name='chassis'>
 
@@ -24,14 +24,14 @@
 
     <inertial>
       <mass value="${mass}"/>
-      <origin xyz="${length/4} 0 0" rpy=" 0 0 0"/>
-      <xacro:box_inertia m="${mass}" x="${length}" y="${width}" z="${height}" xd="${length/4}"/>
+      <origin xyz="${z_rot_axis[0]} 0 0" rpy=" 0 0 0"/>
+      <xacro:box_inertia m="${mass}" x="${length}" y="${width}" z="${height}" xd="${z_rot_axis[0]}" yd="${z_rot_axis[1]}"/>
     </inertial>
 
   </link>
 
   <joint name="chassis_joint" type="fixed">
-    <origin xyz="${-length/4} 0 0" rpy="0 0 0"/>
+    <origin xyz="${-z_rot_axis[0]} 0 0" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="chassis" />
   </joint>
