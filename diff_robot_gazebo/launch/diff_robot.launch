@@ -1,7 +1,7 @@
 <launch>
   <param name ="/use_sim_time" value="true"/>
   <!-- World File -->
-  <arg name="world_file" default="$(find diff_robot_gazebo)/worlds/room.world"/>
+  <arg name="world_file" default="$(find diff_robot_gazebo)/worlds/small_room.world"/>
   <!-- Launch Gazebo World -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(arg world_file)"/>
