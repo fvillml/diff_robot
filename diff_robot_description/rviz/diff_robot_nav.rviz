@@ -6,16 +6,8 @@ Panels:
       Expanded:
         - /TF1/Frames1
         - /TF1/Tree1
-        - /Global Map1
-        - /Global Map1/Costmap1
-        - /Global Map1/Planner1
-        - /Local Map1
-        - /Local Map1/Costmap1
-        - /Local Map1/Planner1
-        - /Local Map1/Cost Cloud1
-        - /Local Map1/Trajectory Cloud1
-        - /Amcl Particle Swarm1
-        - /Full Plan1
+        - /Marker1/Status1
+        - /Marker1/Namespaces1
       Splitter Ratio: 0.5
     Tree Height: 787
   - Class: rviz/Selection
@@ -366,6 +358,14 @@ Visualization Manager:
       Topic: /move_base_node/NavfnROS/plan
       Unreliable: false
       Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: visualization_marker
+      Name: Marker
+      Namespaces:
+        basic_shapes: true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -392,7 +392,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -6.720029830932617
+      Angle: -7.845028400421143
       Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -404,8 +404,8 @@ Visualization Manager:
       Near Clip Distance: 0.009999999776482582
       Scale: 96.64820098876953
       Target Frame: <Fixed Frame>
-      X: -1.3533600568771362
-      Y: 2.0439798831939697
+      X: 2.7134149074554443
+      Y: 0.8450552225112915
     Saved: ~
 Window Geometry:
   Displays:
